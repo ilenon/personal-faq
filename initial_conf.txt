@@ -1,0 +1,35 @@
+##############################################
+##### Configurações Inicias              #####
+##### GIT, COMMITLINT, HUSKY, COMMITIZEN #####
+##############################################
+
+## Start by creating a new Git repository:
+$ git init
+
+## Install commitlint cli and conventional config:
+$ npm install --save-dev @commitlint/config-conventional @commitlint/cli
+
+## Configure commitlint to use conventional config:
+$ echo "module.exports = {extends: ['@commitlint/config-conventional']}" > commitlint.config.js
+
+To lint commits before they are created you can use Husky's commit-msg hook:
+
+## Install Husky:
+$ npm install husky --save-dev
+
+## Activate hooks:
+$ npx husky install
+
+## Add hook to enable Commitlint:
+$ npx husky add .husky/commit-msg  'npx --no -- commitlint --edit ${1}'
+
+## Install Commitizen and commit message convention:
+$ npm install -g commitizen
+$ commitizen init cz-conventional-changelog --save-dev --save-exact
+
+## Add Commitizen to git hooks
+$ npx husky add .husky/prepare-commit-msg 'exec < /dev/tty && npx cz --hook || true'
+
+## Create a .gitignore to ignore '.husky', 'node_modules' and 'commitlint.config.js'
+
+Try running git commit
